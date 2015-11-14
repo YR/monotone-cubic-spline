@@ -1,0 +1,39 @@
+{
+  "name": "@yr/monotone-cubic-spline",
+  "description": "Convert a series of points to a monotone cubic spline",
+  "version": "1.0.0",
+  "author": "Alexander Pope <alexander.pope@nrk.no>",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "buddy": "3.1.x",
+    "expect.js": "*",
+    "mocha": "*",
+    "mocha-phantomjs": "*",
+    "transfigure-babel": "6.1.x"
+  },
+  "main": "src/index.js",
+  "repository": "https://github.com/YR/monotone-cubic-spline.git",
+  "license": "MIT",
+  "scripts": {
+    "prepublish": "buddy build",
+    "test": "NODE_ENV=test mocha test/lib-test.js --reporter spec",
+    "test-client": "buddy build && mocha-phantomjs test/test-runner.html"
+  },
+  "browser": "index.js",
+  "build": {
+    "targets": [
+      {
+        "input": "src/index.js",
+        "output": "test/lib.js",
+        "boilerplate": true,
+        "bootstrap": true
+      },
+      {
+        "input": "src",
+        "output": ".",
+        "modular": false
+      }
+    ]
+  }
+}
