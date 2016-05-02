@@ -1,5 +1,13 @@
 'use strict';
 
+/**
+ * Convert a series of points to a monotone cubic spline
+ * Algorithm based on https://github.com/mbostock/d3
+ * https://github.com/yr/monotone-cubic-spline
+ * @copyright Yr
+ * @license MIT
+ */
+
 const ε = 1e-6;
 
 module.exports = {
@@ -11,19 +19,19 @@ module.exports = {
   points (points) {
     const tgts = tangents(points);
 
-    let p = points[1]
-      , p0 = points[0]
-      , pts = []
-      , t = tgts[1]
-      , t0 = tgts[0];
+    let p = points[1];
+    let p0 = points[0];
+    let pts = [];
+    let t = tgts[1];
+    let t0 = tgts[0];
 
     // Add starting 'M' and 'C' points
     pts.push(p0, [p0[0] + t0[0], p0[1] + t0[1], p[0] - t[0], p[1] - t[1], p[0], p[1]]);
 
     // Add 'S' points
     for (let i = 2, n = tgts.length; i < n; i++) {
-      const p = points[i]
-        , t = tgts[i];
+      const p = points[i];
+      const t = tgts[i];
 
       pts.push([p[0] - t[0], p[1] - t[1], p[0], p[1]]);
     }
@@ -64,8 +72,8 @@ module.exports = {
     let p = '';
 
     for (let i = 0; i < points.length; i++) {
-      const point = points[i]
-        , n = point.length;
+      const point = points[i];
+      const n = point.length;
 
       if (!i) {
         p += 'M' + (point[n - 2]) + ' ' + (point[n - 1]);
@@ -89,11 +97,11 @@ module.exports = {
  * @returns {Array}
  */
 function tangents (points) {
-  const m = finiteDifferences(points)
-    , n = points.length - 1;
+  const m = finiteDifferences(points);
+  const n = points.length - 1;
 
-  let tangents = []
-    , a, b, d, s;
+  let tangents = [];
+  let a, b, d, s;
 
   for (let i = 0; i < n; i++) {
     d = slope(points[i], points[i + 1]);
@@ -136,11 +144,11 @@ function slope (p0, p1) {
  * @returns {Array}
  */
 function finiteDifferences (points) {
-  let m = []
-    , p0 = points[0]
-    , p1 = points[1]
-    , d = m[0] = slope(p0, p1)
-    , i = 1;
+  let m = [];
+  let p0 = points[0];
+  let p1 = points[1];
+  let d = m[0] = slope(p0, p1);
+  let i = 1;
 
   for (let n = points.length - 1; i < n; i++) {
     p0 = p1;

@@ -6,11 +6,11 @@
   "dependencies": {
   },
   "devDependencies": {
-    "buddy": "3.1.x",
+    "buddy": "5.0.x",
+    "buddy-plugin-babel": "6.7.x",
     "expect.js": "*",
     "mocha": "*",
-    "mocha-phantomjs": "*",
-    "transfigure-babel": "6.1.x"
+    "mocha-phantomjs": "*"
   },
   "main": "src/index.js",
   "repository": "https://github.com/YR/monotone-cubic-spline.git",
@@ -24,15 +24,13 @@
   "build": {
     "targets": [
       {
-        "input": "src/index.js",
-        "output": "test/lib.js",
-        "boilerplate": true,
-        "bootstrap": true
-      },
-      {
         "input": "src",
         "output": ".",
         "modular": false
+      },
+      {
+        "input": "src/index.js",
+        "output": "test/lib.js"
       }
     ]
   }

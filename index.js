@@ -1,5 +1,13 @@
 'use strict';
 
+/**
+ * Convert a series of points to a monotone cubic spline
+ * Algorithm based on https://github.com/mbostock/d3
+ * https://github.com/yr/monotone-cubic-spline
+ * @copyright Yr
+ * @license MIT
+ */
+
 var ε = 1e-6;
 
 module.exports = {
@@ -12,25 +20,26 @@ module.exports = {
   points: function points(_points) {
     var tgts = tangents(_points);
 
-    var p = _points[1],
-        p0 = _points[0],
-        pts = [],
-        t = tgts[1],
-        t0 = tgts[0];
+    var p = _points[1];
+    var p0 = _points[0];
+    var pts = [];
+    var t = tgts[1];
+    var t0 = tgts[0];
 
     // Add starting 'M' and 'C' points
     pts.push(p0, [p0[0] + t0[0], p0[1] + t0[1], p[0] - t[0], p[1] - t[1], p[0], p[1]]);
 
     // Add 'S' points
     for (var i = 2, n = tgts.length; i < n; i++) {
-      var _p = _points[i],
-          _t = tgts[i];
+      var _p = _points[i];
+      var _t = tgts[i];
 
       pts.push([_p[0] - _t[0], _p[1] - _t[1], _p[0], _p[1]]);
     }
 
     return pts;
   },
+
 
   /**
    * Slice out a segment of 'points'
@@ -56,6 +65,7 @@ module.exports = {
     return pts;
   },
 
+
   /**
    * Convert 'points' to svg path
    * @param {Array} points
@@ -65,8 +75,8 @@ module.exports = {
     var p = '';
 
     for (var i = 0; i < points.length; i++) {
-      var point = points[i],
-          n = point.length;
+      var point = points[i];
+      var n = point.length;
 
       if (!i) {
         p += 'M' + point[n - 2] + ' ' + point[n - 1];
@@ -90,14 +100,14 @@ module.exports = {
  * @returns {Array}
  */
 function tangents(points) {
-  var m = finiteDifferences(points),
-      n = points.length - 1;
+  var m = finiteDifferences(points);
+  var n = points.length - 1;
 
-  var tangents = [],
-      a = undefined,
-      b = undefined,
-      d = undefined,
-      s = undefined;
+  var tangents = [];
+  var a = void 0,
+      b = void 0,
+      d = void 0,
+      s = void 0;
 
   for (var i = 0; i < n; i++) {
     d = slope(points[i], points[i + 1]);
@@ -116,9 +126,9 @@ function tangents(points) {
     }
   }
 
-  for (var i = 0; i <= n; i++) {
-    s = (points[Math.min(n, i + 1)][0] - points[Math.max(0, i - 1)][0]) / (6 * (1 + m[i] * m[i]));
-    tangents.push([s || 0, m[i] * s || 0]);
+  for (var _i = 0; _i <= n; _i++) {
+    s = (points[Math.min(n, _i + 1)][0] - points[Math.max(0, _i - 1)][0]) / (6 * (1 + m[_i] * m[_i]));
+    tangents.push([s || 0, m[_i] * s || 0]);
   }
 
   return tangents;
@@ -140,11 +150,11 @@ function slope(p0, p1) {
  * @returns {Array}
  */
 function finiteDifferences(points) {
-  var m = [],
-      p0 = points[0],
-      p1 = points[1],
-      d = m[0] = slope(p0, p1),
-      i = 1;
+  var m = [];
+  var p0 = points[0];
+  var p1 = points[1];
+  var d = m[0] = slope(p0, p1);
+  var i = 1;
 
   for (var n = points.length - 1; i < n; i++) {
     p0 = p1;
