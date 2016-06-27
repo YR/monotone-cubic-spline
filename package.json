@@ -6,8 +6,8 @@
   "dependencies": {
   },
   "devDependencies": {
-    "buddy": "5.0.x",
-    "buddy-plugin-babel": "6.7.x",
+    "buddy": "5.1.x",
+    "buddy-plugin-babel": "6.10.x",
     "expect.js": "*",
     "mocha": "*",
     "mocha-phantomjs": "*"
