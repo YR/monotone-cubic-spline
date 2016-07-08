@@ -7,7 +7,7 @@ Convert a series of points to a monotone cubic spline (based on D3.js implementa
 
 ```js
 const spline = require('@yr/monotone-cubic-spline');
-const points = spline.points([[0,0], [1,1], [2,1], [3,0], [4,0]];
+const points = spline.points([[0,0], [1,1], [2,1], [3,0], [4,0]]);
 const svgPath = spline.svgPath(points);
 
 console.log(svgPath);
