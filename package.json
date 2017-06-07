@@ -1,7 +1,7 @@
 {
   "name": "@yr/monotone-cubic-spline",
   "description": "Convert a series of points to a monotone cubic spline",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Alexander Pope <alexander.pope@nrk.no>",
   "dependencies": {},
   "devDependencies": {
